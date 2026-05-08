@@ -499,6 +499,11 @@ func (s *Service) Run(ctx context.Context) error {
 		if errLoad := s.coreManager.Load(ctx); errLoad != nil {
 			log.Warnf("failed to load auth store: %v", errLoad)
 		}
+		for _, auth := range s.coreManager.List() {
+			s.ensureExecutorsForAuth(auth)
+			s.registerModelsForAuth(auth)
+			s.coreManager.RefreshSchedulerEntry(auth.ID)
+		}
 	}
 
 	tokenResult, err := s.tokenProvider.Load(ctx, s.cfg)

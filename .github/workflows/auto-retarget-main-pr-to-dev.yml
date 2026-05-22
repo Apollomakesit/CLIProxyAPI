@@ -1,4 +1,4 @@
-name: auto-retarget-main-pr-to-dev
+﻿name: auto-retarget-main-pr-to-dev
 
 on:
   pull_request_target:
@@ -17,7 +17,7 @@ permissions:
 jobs:
   retarget:
     if: github.actor != 'github-actions[bot]'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Windows, X64, local]
     steps:
       - name: Retarget PR base to dev
         uses: actions/github-script@v7
